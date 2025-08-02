@@ -1,0 +1,7 @@
+[package]
+name = "dev_startup"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+webbrowser = "0.6"
