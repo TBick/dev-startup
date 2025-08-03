@@ -17,11 +17,37 @@ fn main() {
     //  GOALS
     //      -Parse commands
 
-    // TODO: Check Commands somehow
-
+    //  env variables
     let cwd = env::current_dir();
-    println!("{:?}", cwd.unwrap());
+    let mut args = env::args().skip(1);
 
+    //  TODO Check Commands somehow
+    //  parseCommands();
+
+    //  iterate over commands w/ args
+    for arg in args {
+        //  note: loop does not run if args empty
+
+    }
+
+    //  default behavior:
+    //  Open up VSCode in the current directory
+    //  Pick default profile ("Blank")
+    if let Ok(current_dir) = cwd {
+        //  Assumed `code` is in PATH - if not, this will fail
+        println!("Opening VSCode in directory: {}", current_dir.display());
+        let mut command = Command::new("code")
+            .arg(current_dir)
+            .arg("--profile")
+            .arg("Blank")
+            .stdin(Stdio::null())
+            .stdout(Stdio::null())
+            .spawn()
+            .expect("Failed to start VSCode");
+
+            
+
+    }
 
 
 }
