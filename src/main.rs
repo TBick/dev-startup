@@ -6,6 +6,33 @@
 use std::env;
 use std::process::{Command, Stdio};
 use std::io;
+use std::path::PathBuf;
+
+
+struct options {
+    cwd: PathBuf,
+    profile: String,
+}
+
+//  TODO
+//  - Parse commands from args
+//  - Build function for vscode opening
+
+//  Opens vscode with specific options. Options are dictated from caller
+fn open_vscode(options: options) -> io::Result<()> {
+    //  Assumed `code` is in PATH - if not, this will fail
+    let mut command = Command::new("code")
+        .arg("--new-window")
+        .arg("--profile")
+        .arg(options.profile)
+        .arg(options.cwd)
+        .stdin(Stdio::null())
+        .stdout(Stdio::null())
+        .spawn()?;
+
+    command.wait()?;
+    Ok(())
+}
 
 fn main() {
     //  Entry Point
@@ -18,15 +45,24 @@ fn main() {
     //      -Parse commands
 
     //  env variables
-    let cwd = env::current_dir();
-    let mut args = env::args().skip(1);
+    let cwd= env::current_dir();
+    let args = env::args();
+    let mut dev_options: options; 
 
     //  TODO Check Commands somehow
     //  parseCommands();
 
     //  iterate over commands w/ args
     for arg in args {
-        //  note: loop does not run if args empty
+        match arg {
+            cwd => continue,
+            "rust" => {
+
+            }
+        }
+        //  Print error if argument is present for now
+        println!("Arguments are not allowed in this version. Found: {}", arg);
+        return;
 
     }
 
@@ -37,15 +73,16 @@ fn main() {
         //  Assumed `code` is in PATH - if not, this will fail
         println!("Opening VSCode in directory: {}", current_dir.display());
         let mut command = Command::new("code")
-            .arg(current_dir)
+            .arg("--new-window")
             .arg("--profile")
-            .arg("Blank")
+            .arg("blank")
+            .arg(current_dir)
             .stdin(Stdio::null())
             .stdout(Stdio::null())
             .spawn()
             .expect("Failed to start VSCode");
 
-            
+
 
     }
 
