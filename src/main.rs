@@ -56,9 +56,7 @@ fn main() {
     for arg in args {
         match arg {
             cwd => continue,
-            "rust" => {
-
-            }
+            
         }
         //  Print error if argument is present for now
         println!("Arguments are not allowed in this version. Found: {}", arg);
